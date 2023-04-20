@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# debugging nginx port 80
+# I replaced the nginx file ../sites-enabled/default with
+# ../sites-available/default by creating a symbolic link.
+# -s created a symbolic link with -f forces the link even if it already exist
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart

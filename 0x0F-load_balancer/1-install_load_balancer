@@ -13,7 +13,7 @@ server_config=\
 frontend  damian-frontend
         bind *:80
         mode http
-        default_backend yonas-backend
+        default_backend damian-backend
 backend damian-backend
         balance roundrobin
         server 149077-web-01 54.83.163.38:80 check

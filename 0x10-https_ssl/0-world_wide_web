@@ -1,21 +1,16 @@
 #!/usr/bin/env bash
+# print domains and subdomains
 
-domain="$1"
-subdomain="$2"
-
-# Define function to print DNS record information
-print_dns_record_info() {
-    script=$(dig "$1"."$domain" | grep -A1 'ANSWER SECTION' | tr '\t' '\n' | tail -2 | tr '\n' ' ')
-    echo "The subdomain $1 is a $(echo $script | awk '{print $1 " record and points to " $2}')"
+print_domain_subdomain () {
+    dig "$1" | grep -A1 'ANSWER SECTION:' | sed -r "s/$1./$2/g" | awk -F" " ' NR==2 { print "The subdomain " $1 " is a " $4 " record and points to " $5 }'
 }
 
-# If only domain parameter is provided
-if [ $# -eq 1 ]; then
-    print_dns_record_info "www"
-    print_dns_record_info "lb-01"
-    print_dns_record_info "web-01"
-    print_dns_record_info "web-02"
-# If both domain and subdomain parameters are provided
-elif [ $# -eq 2 ]; then
-    print_dns_record_info "$subdomain"
+if [ "$#" -eq 2 ]
+then
+    print_domain_subdomain "$2.$1" "$2"
+else
+    print_domain_subdomain "www.$1" "www"
+    print_domain_subdomain "lb-01.$1" "lb-01"
+    print_domain_subdomain "web-01.$1" "web-01"
+    print_domain_subdomain "web-02.$1" "web-02"
 fi

@@ -6,7 +6,7 @@ subdomain="$2"
 # Define function to print DNS record information
 print_dns_record_info() {
     script=$(dig "$1"."$domain" | grep -A1 'ANSWER SECTION' | tr '\t' '\n' | tail -2 | tr '\n' ' ')
-    echo "The subdomain $1 is a $script record and points to $(echo $script | awk '{print $NF}')"
+    echo "The subdomain $1 is a $(echo $script | awk '{print $1 " record and points to " $2}')"
 }
 
 # If only domain parameter is provided

@@ -1,0 +1,16 @@
+sudo apt-get update
+
+sudo apt-get install -y ufw
+
+#Allow outgoing and deny incoming
+
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+#Allow ports
+sudo ufw allow 22
+sudo ufw allow 80
+sudo ufw allow 443
+
+#Enable Firewall
+sudo ufw enable
